@@ -1,0 +1,91 @@
+﻿@model FloraCFHN.EntidadesDeNegocio.Usuario
+
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+<body style="background-color:#F2F4F4;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Registrate</h1>
+                                    </div>
+                                    <form asp-action="Registrarse" method="post">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="Nombre"></label>
+                                            <input asp-for="Nombre" class="form-control" />
+                                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Apellido"></label>
+                                            <input asp-for="Apellido" class="form-control" />
+                                            <span asp-validation-for="Apellido" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Teléfono</label>
+                                            <input asp-for="Telefono" class="form-control" />
+                                            <span asp-validation-for="Telefono" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Usuario</label>
+                                            <input asp-for="Login" class="form-control" />
+                                            <span asp-validation-for="Login" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Contraseña</label>
+                                            <input asp-for="Password" class="form-control" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                           <label class="control-label">Confirmar contraseña</label>
+                                            <input asp-for="confirmPassword_aux" class="form-control" />
+                                            <span asp-validation-for="confirmPassword_aux" class="text-danger"></span>
+                                        </div>
+
+                                        <br />
+
+                                        <div class="align-content-center">
+                                            <input type="submit" value="Crear Cuenta" class="btn btn-primary " />
+                                        </div>
+
+                                        <br />
+                                        <hr />
+
+                                        <div>
+                                            <a asp-action="Login">¿Ya tienes una cuenta? Inicia Sesión</a>
+                                        </div>
+                                    
+                                        <span class="text-danger">@ViewBag.Error</span>
+                                    </form>
+                                </div>                          
+                            </div>
+                            <div class="col-lg-6 d-none d-lg-block">
+                                  <img src="https://i.pinimg.com/564x/3a/9f/9b/3a9f9bf48e5f1f6d6c4dda38a8f9dfc2.jpg" class="card-img-top"  />
+                                  <br />
+                                  <hr />
+                                  <h3>"La tierra proporciona lo suficiente para satisfacer las necesidades de cada hombre, pero no la codicia de cada hombre".</h3>
+                                  <br />
+                                  <h4 class="text-center">Mahatma Gandhi</h4>
+                            </div>
+                        </div>                                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</body>
+
+

@@ -1,0 +1,122 @@
+﻿@model IEnumerable<FloraCFHN.EntidadesDeNegocio.Planta>
+
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_LayoutCatalogo.cshtml";
+    int numPage = 1;
+    int numRegistros = 0;
+    int numRegistrosPorPage = 10;
+    int[] tops = { 10, 20, 50, 100, 500, 1000, 10000, -1 };
+    int topActual = Convert.ToInt32(ViewBag.Top);
+    List<FloraCFHN.EntidadesDeNegocio.Categoria> categorias = ViewBag.Categorias as List<FloraCFHN.EntidadesDeNegocio.Categoria>;
+
+}
+
+<body style="background-color:#F2F4F4;">
+    <h1>Catalogo de Plantas</h1>
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarsExample02">
+
+                <form class="d-flex" role="search">
+                    <label class="control-label text-white">Nombre</label> &nbsp; &nbsp;
+                    <input class="form-control" type="text" name="Nombre" /> &nbsp;
+
+                    <label class="control-label text-white">Categoria</label> &nbsp; &nbsp;
+                    <select name="categoriaid" class="form-control">
+                        <option selected value="0">SELECCIONAR</option>
+                        @foreach (var item in categorias)
+                        {
+                            <option value="@item.Id">@item.Nombre</option>
+                        }
+                    </select>
+                    &nbsp; &nbsp;
+                    <label class="control-label text-white">Top</label> &nbsp; &nbsp;
+                    <select name="top_aux" class="form-control">
+                        @foreach (var item in tops)
+                        {
+                            string strItem = item != -1 ? item.ToString() : "Todos";
+                            if (item != topActual)
+                            {
+                                <option value="@item">@strItem</option>
+                            }
+                            else
+                            {
+                                <option selected value="@item">@strItem</option>
+                            }
+                        }
+                    </select> &nbsp; &nbsp;
+
+                    <input type="submit" value="Buscar" class="btn btn-primary" />
+                </form> 
+            </div>
+        </div>
+    </nav>
+
+    <br />
+    <hr />
+
+    <form enctype="multipart/form-data" method="post" class="container">
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @*INICIO CARD*@
+                    @foreach (var item in Model)
+                    {
+                        <div class="col">
+                            <div class="card h-100">
+
+                                <img src="@item.ImagenUrl" style="max-height: 30vh; object-fit:contain;" class="card-img-top rounded" alt="..." />
+                                <div class="card-body">
+                                    <h5 class="card-text"><b>Nombre: </b>@item.Nombre </h5>
+                                    <p class="card-text"><b>Categoría: </b>@item.Categoria.Nombre</p>
+                                    <p class=card-text><b>Descripción: </b>@item.Descripcion</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a class="btn btn-outline-warning" href="@Url.Action("Details", "Catalogo", new{ id = item.Id})">Descripción</a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        numRegistros++;
+                        if (numRegistros == numRegistrosPorPage)
+                        {
+                            numPage++;
+                            numRegistros = 0;
+                        }
+                    }
+                    @{
+                        if (numRegistros == 0)
+                        {
+                            numPage--;
+                        }
+                    }
+                    @*FIN CARD*@
+                </div>
+            </div>
+        </div>
+    </form>
+
+    @if (numPage > 1)
+    {
+        <div class="row" style="overflow:auto">
+            <div class="col-md-12">
+                <ul class="pagination paginationjs" data-numpage="@numPage" data-pageactive="1">
+                    <li class="page-item" data-typepage="Previous"><a class="page-link" href="#">Previous</a></li>
+                    @for (var i = 1; i <= numPage; i++)
+                    {
+                        <li class="page-item" data-page="@i" data-typepage="Item"><a class="page-link" href="#">@i</a></li>
+                    }
+                    <li class="page-item" data-typepage="Next"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    }
+</body>
+

@@ -1,0 +1,124 @@
+﻿@model FloraCFHN.EntidadesDeNegocio.Usuario
+
+@{
+    ViewData["Title"] = "Crear";
+    List<FloraCFHN.EntidadesDeNegocio.Rol> roles = ViewBag.Roles as List<FloraCFHN.EntidadesDeNegocio.Rol>;
+
+}
+
+<body style="background-color:#F2F4F4;">
+    <h1>Nuevo usuario</h1>
+
+    <hr />
+
+    <form asp-action="Create" id="create-form">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Apellido" class="control-label"></label>
+                    <input asp-for="Apellido" class="form-control" />
+                    <span asp-validation-for="Apellido" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Teléfono</label>
+                    <input asp-for="Telefono" class="form-control" />
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+            </div>
+
+            @*<div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Estatus" class="control-label"></label>
+                    <select asp-for="Estatus" class="form-control">
+                        <option value="">SELECCIONAR</option>
+                        <option selected value="1">ACTIVO</option>
+                        <option value="2">INACTIVO</option>
+                    </select>
+                    <span asp-validation-for="Estatus" class="text-danger"></span>
+                </div>
+            </div>*@
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Usuario</label>
+                    <input asp-for="Login" class="form-control" />
+                    <span asp-validation-for="Login" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Contraseña</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Confirmar contraseña</label>
+                    <input asp-for="confirmPassword_aux" class="form-control" />
+                    <span asp-validation-for="confirmPassword_aux" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Rol</label>
+                    <select asp-for="RolId" class="form-control">
+                        <option selected value="">SELECCIONAR</option>
+                        @foreach (var item in roles)
+                        {
+                            <option value="@item.Id">@item.Nombre</option>
+                        }
+                    </select>
+                    <span asp-validation-for="RolId" class="text-danger"></span>
+                </div>
+            </div>
+
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="submit" id="guardar-btn" value="Guardar" class="btn btn-primary" /> &nbsp; &nbsp;
+                    <a asp-action="Index" class="btn btn-dark">Cancelar</a>
+                </div>
+                <span class="text-danger">@ViewBag.Error</span>
+            </div>
+        </div>
+    </form>
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#guardar-btn').click(function (e) {
+                    e.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+                    // Establecer el valor del campo Estatus a "ACTIVO" antes de enviar el formulario
+                    $('#Estatus').val('1');
+
+                    // Enviar el formulario
+                    $('#create-form').submit();
+                });
+            });
+        </script>
+    }
+</body>
+

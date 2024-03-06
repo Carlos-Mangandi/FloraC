@@ -1,0 +1,73 @@
+﻿@model FloraCFHN.EntidadesDeNegocio.Planta
+
+@{
+    ViewData["Title"] = "Modificar";
+    List<FloraCFHN.EntidadesDeNegocio.Categoria> categorias = ViewBag.Categorias as List<FloraCFHN.EntidadesDeNegocio.Categoria>;
+}
+
+<body style="background-color:#F2F4F4;">
+    <h1>Modificar la planta</h1>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+            
+                <div class="form-group">
+                   <label class="control-label">Categoría</label>
+                    <select asp-for="CategoriaId" class="form-control">
+                        @foreach (var item in categorias)
+                        {
+                            if(Model.CategoriaId == item.Id)
+                            {
+                                <option selected value="@item.Id">@item.Nombre</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        }
+                    </select>
+
+                    <span asp-validation-for="CategoriaId" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Descripción</label>
+                    <textarea asp-for="Descripcion" class="form-control" rows="12" col="12"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+                     
+                <div class="form-group">
+                    <label class="control-label">Imagen</label>
+                    <input asp-for="ImagenUrl" class="form-control" />
+                    <span asp-validation-for="ImagenUrl" class="text-danger"></span>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />&nbsp; &nbsp;
+                     <a asp-action="Index" class="btn btn-dark">Cancelar</a>
+                </div>
+
+                <span class="text-danger">@ViewBag.Error</span>
+
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</body>

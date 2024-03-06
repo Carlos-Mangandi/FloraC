@@ -1,0 +1,64 @@
+﻿@model FloraCFHN.EntidadesDeNegocio.Usuario
+
+@{
+    ViewData["Title"] = "Login";
+}
+<body style="background-color:#D5D8DC;">
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <divc class="col-lg-6 d-none d-lg-block">
+                                <img src="https://i.pinimg.com/564x/3a/9f/9b/3a9f9bf48e5f1f6d6c4dda38a8f9dfc2.jpg" class="card-img-top"  />
+                            </divc>
+                            <div class="col-lg-6 ">
+                                <div class="p-5">
+                                    <h1 class="h4 text-gray-900 mb-4 text-center">Bienvenido</h1>
+                                </div>
+                                <form asp-controller="Usuario" asp-action="Login" method="post">
+                                    <input type="hidden" name="pReturnUrl" value="@ViewBag.Url" />
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label">Usuario</label>
+                                            <input asp-for="Login" class="form-control" />
+                                            <span asp-validation-for="Login" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label">Contraseña</label>
+                                            <input asp-for="Password" class="form-control" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <input type="submit" value="Login" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div>
+                                        <a asp-action="Registrarse">¡Todavía no tienes una cuenta? Regístrate</a>
+                                    </div>
+                                    <span class="text-danger">@ViewBag.Error</span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</body>
+
